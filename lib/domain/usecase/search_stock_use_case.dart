@@ -1,1 +1,3 @@
-class SearchStockUseCase {}
+class SearchStockUseCase {
+  //test
+}

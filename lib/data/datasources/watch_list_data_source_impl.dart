@@ -1,12 +1,10 @@
 import 'dart:convert';
-
-import 'package:stock_watchlist/data/datasources/watch_list_data_source.dart';
 import 'package:http/http.dart' as http;
 
-class WatchListDataSourceImpl implements WatchListDataSource {
+class WatchListDataSourceImpl {
   final String _apiKey = '6MYAK98OE63PA571';
   final String _apiKey2 = 'FMQIKB4SZGP5UAB8';
-  @override
+
   Future<Map<String, dynamic>> fetchWatchListData(String symbol) async {
     print('print from watchListData');
     final url = Uri.parse(

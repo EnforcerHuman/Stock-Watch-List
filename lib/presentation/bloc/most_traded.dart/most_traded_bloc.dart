@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_watchlist/data/models/top_gainers.dart';
@@ -13,8 +14,13 @@ class MostTradedBloc extends Bloc<MostTradedEvent, MostTradedState> {
 
     on<LoadMostTradedItems>((event, emit) async {
       try {
-        TopGainers topGainers = await getMostActivelyTrades.call();
-        emit(MostTradedLoaded(topGainers));
+        Either<String, TopGainers> topGainers =
+            await getMostActivelyTrades.call();
+        topGainers.fold((failure) {
+          emit(MostTradedError(failure));
+        }, (topGainers) {
+          emit(MostTradedLoaded(topGainers));
+        });
       } catch (e) {
         emit(MostTradedError(e.toString()));
       }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_watchlist/data/datasources/watch_list_data_source_impl.dart';
 import 'package:stock_watchlist/data/repositories/watch_list_repo_impl.dart';
+import 'package:stock_watchlist/domain/repositories/watch_list_repository.dart';
 import 'package:stock_watchlist/domain/usecase/watch_list_use_case.dart';
 import 'package:stock_watchlist/presentation/bloc/most_traded.dart/most_traded_bloc.dart';
 import 'package:stock_watchlist/presentation/widgets/error_manager.dart';
@@ -27,9 +28,9 @@ class StockList extends StatelessWidget {
                   return StockCard(
                     onPressed: () async {
                       final List<String> watchList = ['AAPL', 'GOOG', 'TSLA'];
-                      WatchListUseCase watchListUseCase = WatchListUseCase(
-                          WatchListRepositioryImpl(WatchListDataSourceImpl()));
-                      print(watchListUseCase.call(watchList));
+                      // WatchListUseCase watchListUseCase = WatchListUseCase(
+                      //     WatchListRepositoryimpl(WatchListDataSourceImpl()));
+                      // print(watchListUseCase.call(watchList));
                     },
                     stockName:
                         state.topGainers.mostActivelyTraded[index].ticker,

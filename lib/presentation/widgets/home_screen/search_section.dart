@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stock_watchlist/presentation/bloc/stock_search_bloc/stock_search_bloc.dart';
+import 'package:stock_watchlist/presentation/bloc/stock_search_bloc/stock_search_event.dart';
 
 // ignore: must_be_immutable
 class SearchSection extends StatelessWidget {
@@ -12,7 +15,7 @@ class SearchSection extends StatelessWidget {
       child: SearchBar(
         controller: controller,
         onChanged: (value) {
-          print('VAlue is $value');
+          context.read<StockSearchBloc>().add(SearchStocksEvent(value));
         },
       ),
     );

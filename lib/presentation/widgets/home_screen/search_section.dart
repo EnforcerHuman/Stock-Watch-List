@@ -15,7 +15,12 @@ class SearchSection extends StatelessWidget {
       child: SearchBar(
         controller: controller,
         onChanged: (value) {
-          context.read<StockSearchBloc>().add(SearchStocksEvent(value));
+          if (value.isEmpty) {
+            context.read<StockSearchBloc>().add(CancelStockSearch());
+          }
+          if (value.isNotEmpty) {
+            context.read<StockSearchBloc>().add(SearchStocksEvent(value));
+          }
         },
       ),
     );

@@ -11,12 +11,13 @@ class StockSearchBloc extends Bloc<StockSearchEvent, StockSearchState> {
       emit(StockSearchLoading());
       try {
         final results = await searchStocks(event.query);
-        print('Print from search bloc');
-        print(results);
         emit(StockSearchLoaded(results));
       } catch (e) {
         emit(StockSearchError(e.toString()));
       }
+    });
+    on<CancelStockSearch>((event, emit) {
+      emit(StockSearchInitial());
     });
   }
 }

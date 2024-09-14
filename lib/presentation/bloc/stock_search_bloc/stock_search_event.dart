@@ -5,3 +5,5 @@ class SearchStocksEvent extends StockSearchEvent {
 
   SearchStocksEvent(this.query);
 }
+
+class CancelStockSearch extends StockSearchEvent {}

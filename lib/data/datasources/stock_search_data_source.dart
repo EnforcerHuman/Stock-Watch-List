@@ -18,6 +18,10 @@ class StockSearchRemoteDataSourceImpl implements StockSearchRemoteDataSource {
     });
 
     if (response['bestMatches'] != null) {
+      print('print from data source');
+      print((response['bestMatches'] as List)
+          .map((item) => StockSearchResultModel.fromJson(item))
+          .toList());
       return (response['bestMatches'] as List)
           .map((item) => StockSearchResultModel.fromJson(item))
           .toList();

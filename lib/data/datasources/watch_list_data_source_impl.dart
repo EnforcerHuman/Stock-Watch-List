@@ -13,6 +13,7 @@ class WatchListDataSourceImpl {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
+
       final timeSeries = data['Time Series (Daily)'];
       final latestDate = timeSeries.keys.first;
       final latestData = timeSeries[latestDate];

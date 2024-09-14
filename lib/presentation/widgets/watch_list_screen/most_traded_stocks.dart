@@ -17,7 +17,12 @@ class MostTradedStocks extends StatelessWidget {
                 itemCount: state.topGainers.mostActivelyTraded.length,
                 itemBuilder: (context, index) {
                   return StockCard(
-                    onPressed: () async {},
+                    onPressed: () async {
+                      // print('prrint from stock card');
+                      // WatchListUseCase watchListUseCase = WatchListUseCase(
+                      //     WatchListRepositioryImpl(WatchListDataSourceImpl()));
+                      // watchListUseCase.printValue();
+                    },
                     stockName:
                         state.topGainers.mostActivelyTraded[index].ticker,
                     stockPrice: state.topGainers.mostActivelyTraded[index].price

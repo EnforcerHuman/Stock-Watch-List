@@ -17,7 +17,7 @@ class StockSearchBloc extends Bloc<StockSearchEvent, StockSearchState> {
       }
     });
     on<CancelStockSearch>((event, emit) {
-      emit(StockSearchInitial());
+      emit(StockSearchCancelled());
     });
   }
 }

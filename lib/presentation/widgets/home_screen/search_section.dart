@@ -16,9 +16,9 @@ class SearchSection extends StatelessWidget {
         controller: controller,
         onChanged: (value) {
           if (value.isEmpty) {
+            print('value status : ${value.isEmpty}');
             context.read<StockSearchBloc>().add(CancelStockSearch());
-          }
-          if (value.isNotEmpty) {
+          } else {
             context.read<StockSearchBloc>().add(SearchStocksEvent(value));
           }
         },

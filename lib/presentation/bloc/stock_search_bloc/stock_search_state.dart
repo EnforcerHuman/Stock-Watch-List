@@ -17,3 +17,5 @@ class StockSearchError extends StockSearchState {
 
   StockSearchError(this.message);
 }
+
+class StockSearchCancelled extends StockSearchState {}

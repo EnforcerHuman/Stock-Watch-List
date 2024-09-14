@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:stock_watchlist/core/error/failures.dart';
 import 'package:stock_watchlist/data/models/top_gainers.dart';
 import 'package:stock_watchlist/domain/repositories/most_actively_traded_repository.dart';
-import 'package:dartz/dartz.dart';
 
 class GetMostActivelyTrades {
   final MostActivelyTradedRepository repository;

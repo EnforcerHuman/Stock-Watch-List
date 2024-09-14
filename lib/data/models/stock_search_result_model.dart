@@ -2,11 +2,11 @@ import 'package:stock_watchlist/domain/entities/stock_search_result.dart';
 
 class StockSearchResultModel extends StockSearchResult {
   StockSearchResultModel({
-    required String symbol,
-    required String name,
-    required String type,
-    required String region,
-  }) : super(symbol: symbol, name: name, type: type, region: region);
+    required super.symbol,
+    required super.name,
+    required super.type,
+    required super.region,
+  });
 
   factory StockSearchResultModel.fromJson(Map<String, dynamic> json) {
     return StockSearchResultModel(

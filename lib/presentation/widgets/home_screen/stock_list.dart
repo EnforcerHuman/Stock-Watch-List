@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_watchlist/presentation/bloc/stock_search_bloc/stock_search_bloc.dart';
 import 'package:stock_watchlist/presentation/bloc/stock_search_bloc/stock_search_state.dart';
+import 'package:stock_watchlist/presentation/bloc/watch_list_bloc/watch_list_bloc.dart';
+import 'package:stock_watchlist/presentation/widgets/search_result_card.dart';
 import 'package:stock_watchlist/presentation/widgets/stock_card.dart';
 import 'package:stock_watchlist/presentation/widgets/watch_list_screen/most_traded_stocks.dart';
 
@@ -12,10 +14,13 @@ class StockList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<StockSearchBloc, StockSearchState>(
       listener: (context, state) {
-        if (state is StockSearchInitial) {}
+        if (state is StockSearchCancelled) {
+          context.read<WatchListBloc>().add(const LoadWatchListData(['AAPL']));
+        }
       },
       builder: (context, state) {
-        if (state is StockSearchInitial) {
+        print('State of search bloc $state');
+        if (state is StockSearchCancelled || state is StockSearchInitial) {
           return const MostTradedStocks();
         } else if (state is StockSearchLoading) {
           return const CircularProgressIndicator();
@@ -24,10 +29,16 @@ class StockList extends StatelessWidget {
             child: ListView.builder(
                 itemCount: state.results.length,
                 itemBuilder: (context, index) {
-                  return StockCard(
-                      onPressed: () {},
-                      stockName: state.results[index].name,
-                      stockPrice: state.results[index].name);
+                  return SearchResultCard(
+                    onPressed: () {},
+                    stockName: state.results[index].name,
+                    region: state.results[index].region,
+                    symbol: state.results[index].symbol,
+                  );
+                  // return StockCard(
+                  //     onPressed: () {},
+                  //     stockName: state.results[index].name,
+                  //     stockPrice: state.results[index].name);
                 }),
           );
         } else {
@@ -37,22 +48,3 @@ class StockList extends StatelessWidget {
     );
   }
 }
-
-
-  // if (state is MostTradedLoaded) {
-  //         return Expanded(
-  //           child: ListView.builder(
-  //               itemCount: state.topGainers.mostActivelyTraded.length,
-  //               itemBuilder: (context, index) {
-  //                 return StockCard(
-  //                   onPressed: () async {},
-  //                   stockName:
-  //                       state.topGainers.mostActivelyTraded[index].ticker,
-  //                   stockPrice: state.topGainers.mostActivelyTraded[index].price
-  //                       .toString(),
-  //                 );
-  //               }),
-  //         );
-  //       } else {
-  //         return const ErrorManager(errorMessage: 'NO DATA FOUND');
-  //       }

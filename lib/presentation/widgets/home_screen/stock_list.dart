@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:stock_watchlist/presentation/bloc/WatchListStorageBloc/watch_list_storage_bloc_bloc.dart';
 import 'package:stock_watchlist/presentation/bloc/stock_search_bloc/stock_search_bloc.dart';
 import 'package:stock_watchlist/presentation/bloc/stock_search_bloc/stock_search_state.dart';
 import 'package:stock_watchlist/presentation/bloc/watch_list_bloc/watch_list_bloc.dart';
 import 'package:stock_watchlist/presentation/widgets/search_result_card.dart';
-import 'package:stock_watchlist/presentation/widgets/stock_card.dart';
 import 'package:stock_watchlist/presentation/widgets/watch_list_screen/most_traded_stocks.dart';
 
 class StockList extends StatelessWidget {
@@ -15,7 +16,7 @@ class StockList extends StatelessWidget {
     return BlocConsumer<StockSearchBloc, StockSearchState>(
       listener: (context, state) {
         if (state is StockSearchCancelled) {
-          context.read<WatchListBloc>().add(const LoadWatchListData(['AAPL']));
+          context.read<WatchListBloc>().add(const LoadWatchListData());
         }
       },
       builder: (context, state) {
@@ -30,15 +31,15 @@ class StockList extends StatelessWidget {
                 itemCount: state.results.length,
                 itemBuilder: (context, index) {
                   return SearchResultCard(
-                    onPressed: () {},
+                    onPressed: () {
+                      context
+                          .read<WatchListStorageBlocBloc>()
+                          .add(AddWatchListItem(state.results[index].symbol));
+                    },
                     stockName: state.results[index].name,
                     region: state.results[index].region,
                     symbol: state.results[index].symbol,
                   );
-                  // return StockCard(
-                  //     onPressed: () {},
-                  //     stockName: state.results[index].name,
-                  //     stockPrice: state.results[index].name);
                 }),
           );
         } else {

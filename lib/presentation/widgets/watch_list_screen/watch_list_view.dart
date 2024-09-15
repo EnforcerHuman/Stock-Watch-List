@@ -1,53 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stock_watchlist/data/datasources/most_actively_traded_data_source_impl.dart';
-import 'package:stock_watchlist/data/models/top_gainers.dart';
+import 'package:stock_watchlist/data/datasources/watch_list_data_source_impl.dart';
+import 'package:stock_watchlist/data/repositories/watch_list_repo_impl.dart';
+import 'package:stock_watchlist/domain/usecase/watch_list_use_case.dart';
 import 'package:stock_watchlist/presentation/bloc/watch_list_bloc/watch_list_bloc.dart';
 import 'package:stock_watchlist/presentation/widgets/error_manager.dart';
-import 'package:stock_watchlist/presentation/widgets/stock_card.dart';
-import 'package:http/http.dart' as http;
+import 'package:stock_watchlist/presentation/widgets/watch_list_screen/wath_list_items_section.dart';
 
 class WatchListView extends StatelessWidget {
-  WatchListView({super.key});
-  final List<String> watchList = ['AAPL', 'GOOG', 'TSLA'];
+  const WatchListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // context.read<WatchListBloc>().add(LoadWatchListData(watchList));
-
+    context.read<WatchListBloc>().add(const LoadWatchListData());
+    WatchListUseCase watchListUseCase =
+        WatchListUseCase(WatchListRepositioryImpl(WatchListDataSourceImpl()));
+    watchListUseCase.call();
     return Column(
       children: [
         BlocBuilder<WatchListBloc, WatchListState>(
           builder: (context, state) {
-            print('state from watch list view $state ');
             if (state is WatchListDataLoaded) {
-              return Expanded(
-                  child: ListView.builder(
-                      itemCount: state.watchListData.length,
-                      itemBuilder: (context, index) {
-                        return StockCard(
-                          onPressed: () async {
-                            // MostActivelyTradedRemoteDataSourceImpl
-                            //     mostActivelyTradedRemoteDataSourceImpl =
-                            //     MostActivelyTradedRemoteDataSourceImpl(
-                            //         client: http.Client());
-                            // TopGainers gainers =
-                            //     await mostActivelyTradedRemoteDataSourceImpl
-                            //         .fetchMostActivelyTraded();
-                            // print('Print from Home screeen view');
-                            // print(gainers.mostActivelyTraded.toString());
-                            final url = Uri.parse(
-                                'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=AAPL&apikey=6MYAK98OE63PA571');
-                            final result = await http.get(url);
-                            print(result.body);
-                          },
-                          stockName: state.watchListData[index].companyName,
-                          stockPrice:
-                              state.watchListData[index].lastDayClosingPrice,
-                        );
-                      }));
+              if (state.watchListData.isEmpty) {
+                return const Center(
+                  child: Text('NO ITEMS IN WATCH LIST'),
+                );
+              } else {
+                return WatchListItemsSection(state: state);
+              }
+            } else if (state is WatchListDataPartiallyLoaded) {
+              return WatchListItemsSection(state: state);
             } else if (state is WatchListDataFailed) {
               return ErrorManager(errorMessage: state.error);
+            } else if (state is WatchListDataLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             } else {
               return const ErrorManager(errorMessage: 'UNEXPECTED ERROR');
             }

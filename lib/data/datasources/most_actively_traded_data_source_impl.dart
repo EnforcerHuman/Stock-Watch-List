@@ -11,7 +11,7 @@ class MostActivelyTradedRemoteDataSource {
 
   Future<TopGainers> fetchMostActivelyTraded() async {
     final response = await client.get(Uri.parse(
-        'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=6MYAK98OE63PA571'));
+        'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=FMQIKB4SZGP5UAB8'));
     print('RESPOSE STATUS CODE : ${response.statusCode}');
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonData = json.decode(response.body);

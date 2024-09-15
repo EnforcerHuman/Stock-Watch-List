@@ -20,3 +20,5 @@ final class MostTradedError extends MostTradedState {
 
   const MostTradedError(this.error);
 }
+
+final class MostTradedItemsLoading extends MostTradedState {}

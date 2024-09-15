@@ -12,15 +12,17 @@ import 'package:stock_watchlist/data/repositories/watch_list_repo_impl.dart';
 import 'package:stock_watchlist/domain/usecase/most_actively_traded_use_case.dart';
 import 'package:stock_watchlist/domain/usecase/search_stocks.dart';
 import 'package:stock_watchlist/domain/usecase/watch_list_use_case.dart';
+import 'package:stock_watchlist/presentation/bloc/WatchListStorageBloc/watch_list_storage_bloc_bloc.dart';
 import 'package:stock_watchlist/presentation/bloc/bottom_navigation/bottom_navigation_bloc.dart';
 import 'package:stock_watchlist/presentation/bloc/most_traded.dart/most_traded_bloc.dart';
 import 'package:stock_watchlist/presentation/bloc/stock_search_bloc/stock_search_bloc.dart';
 import 'package:stock_watchlist/presentation/bloc/watch_list_bloc/watch_list_bloc.dart';
 import 'package:stock_watchlist/presentation/screens/main_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:toastification/toastification.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ToastificationWrapper(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -44,11 +46,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => WatchListBloc(WatchListUseCase(
                 WatchListRepositioryImpl(WatchListDataSourceImpl())))
-              ..add(const LoadWatchListData(['AAPL', 'GOOG', 'TSLA', 'NVDA']))),
+              ..add(const LoadWatchListData())),
         BlocProvider(
             create: (context) => StockSearchBloc(SearchStocks(
                 StockSearchRepositoryImpl(
-                    StockSearchRemoteDataSourceImpl(ApiClients())))))
+                    StockSearchRemoteDataSourceImpl(ApiClients()))))),
+        BlocProvider(
+            create: (context) => WatchListStorageBlocBloc(WatchListUseCase(
+                WatchListRepositioryImpl(WatchListDataSourceImpl()))))
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

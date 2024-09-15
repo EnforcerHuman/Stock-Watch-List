@@ -8,7 +8,5 @@ sealed class WatchListEvent extends Equatable {
 }
 
 final class LoadWatchListData extends WatchListEvent {
-  final List<String> watchListItems;
-
-  const LoadWatchListData(this.watchListItems);
+  const LoadWatchListData();
 }

@@ -13,6 +13,7 @@ class MostTradedBloc extends Bloc<MostTradedEvent, MostTradedState> {
     on<MostTradedEvent>((event, emit) {});
 
     on<LoadMostTradedItems>((event, emit) async {
+      emit(MostTradedItemsLoading());
       try {
         Either<String, TopGainers> topGainers =
             await getMostActivelyTrades.call();

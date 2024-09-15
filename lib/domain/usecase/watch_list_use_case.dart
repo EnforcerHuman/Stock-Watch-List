@@ -9,23 +9,59 @@ class WatchListUseCase {
   WatchListUseCase(this.watchListRepositiory);
   LocalStorageRepoImpl localStorageRepoImpl = LocalStorageRepoImpl();
 
-  Future<List<WatchListModel>> call(List<String> symbolss) async {
-    List<WatchListModel> data = [];
-    List<String> symbols = [];
-    List<WacthListItemModel> test =
-        await localStorageRepoImpl.getAllWatchListItems();
-    for (var stock in test) {
-      symbols.add(stock.stockName);
-    }
+  // Future<List<WatchListModel>> call() async {
+  //   List<WatchListModel> data = [];
+  //   List<String> watchList = [];
+
+  //   try {
+  //     List<WacthListItemModel> localItems =
+  //         await localStorageRepoImpl.getAllWatchListItems();
+  //     watchList = localItems.map((item) => item.stockName).toList();
+
+  //     if (watchList.isEmpty) {
+  //       print("No items found in the local database.");
+  //       return data;
+  //     }
+
+  //     for (var symbol in watchList) {
+  //       try {
+  //         Map<String, dynamic> stockData =
+  //             await watchListRepositiory.fetchWatchListStocks(symbol);
+  //         WatchListModel watchlist = WatchListModel.fromJson(stockData);
+  //         data.add(watchlist);
+  //       } catch (e) {
+  //         print('Error fetching data for $symbol: $e');
+  //       }
+  //     }
+  //   } catch (e) {
+  //     print('Error in call() method: $e');
+  //   }
+
+  //   print("Data from watchList: $data");
+  //   return data;
+  // }
+  Stream<WatchListModel> call() async* {
     try {
-      for (var symbol in symbols) {
-        Map<String, dynamic> test =
-            await watchListRepositiory.fetchWatchListStocks(symbol);
-        WatchListModel watchlist = WatchListModel.fromJson(test);
-        data.add(watchlist);
+      List<WacthListItemModel> localItems =
+          await localStorageRepoImpl.getAllWatchListItems();
+      List<String> watchList =
+          localItems.map((item) => item.stockName).toList();
+
+      if (watchList.isEmpty) {
+        print("No items found in the local database.");
+        return;
       }
 
-      return data;
+      for (var symbol in watchList) {
+        try {
+          Map<String, dynamic> stockData =
+              await watchListRepositiory.fetchWatchListStocks(symbol);
+          WatchListModel watchlist = WatchListModel.fromJson(stockData);
+          yield watchlist;
+        } catch (e) {
+          print('Error fetching data for $symbol: $e');
+        }
+      }
     } catch (e) {
       rethrow;
     }

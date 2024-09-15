@@ -12,12 +12,19 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
     on<WatchListEvent>((event, emit) {
       // TODO: implement event handler
     });
+    //
     on<LoadWatchListData>((event, emit) async {
+      emit(WatchListDataLoading());
       try {
-        List<WatchListModel> watchListdata =
-            await watchListUseCase.call(event.watchListItems);
+        List<WatchListModel> watchListData = [];
 
-        emit(WatchListDataLoaded(watchListdata));
+        await for (final item in watchListUseCase.call()) {
+          watchListData.add(item);
+          // Optionally emit a state for each item loaded
+          emit(WatchListDataPartiallyLoaded(List.from(watchListData)));
+        }
+
+        emit(WatchListDataLoaded(watchListData));
       } catch (e) {
         emit(WatchListDataFailed(e.toString()));
       }

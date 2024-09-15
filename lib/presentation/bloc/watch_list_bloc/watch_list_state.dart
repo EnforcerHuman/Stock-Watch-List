@@ -20,3 +20,11 @@ final class WatchListDataFailed extends WatchListState {
 
   const WatchListDataFailed(this.error);
 }
+
+final class WatchListDataLoading extends WatchListState {}
+
+final class WatchListDataPartiallyLoaded extends WatchListState {
+  final List<WatchListModel> watchListData;
+
+  const WatchListDataPartiallyLoaded(this.watchListData);
+}

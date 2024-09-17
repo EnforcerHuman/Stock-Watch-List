@@ -23,17 +23,24 @@ dependencies:
   #Stylish Bottom Navigation Bar
   #This package provides a stylish bottom navigation bar with various customization options
   stylish_bottom_bar: ^1.1.0
-  #
+  # motion_tab_bar: A customizable tab bar package that provides smooth motion animations and tab transitions.
   motion_tab_bar: ^2.0.4
 
-  #This package used to manage the state of the entire  application
+  # flutter_bloc: Used for state management in Flutter applications based on the BLoC pattern.
   flutter_bloc: ^8.1.6
+  # equatable: Simplifies value equality in Dart objects, making it easier to compare states and events.
   equatable: ^2.0.5
+  # internet_connection_checker: Provides utilities to check for an active internet connection.
   internet_connection_checker: ^2.0.0
+  # dartz: A functional programming package for Dart that provides functional types like Either, Option, etc.
   dartz: ^0.10.1
+  # http: A package for making HTTP requests, used to interact with APIs or fetch data over the network.
   http: ^1.2.2
+  # sqflite: A Flutter plugin for SQLite, used for local database storage on devices.
   sqflite: ^2.3.3+1
+  # toastification: A customizable toast notification package for displaying messages to users.
   toastification: ^2.2.0
+  # path: A package that provides utilities for manipulating file system paths in Dart.
   path: ^1.9.0
 
 dev_dependencies:

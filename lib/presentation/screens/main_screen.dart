@@ -22,7 +22,6 @@ class MainScreen extends StatelessWidget {
         );
       },
       child: Scaffold(
-        appBar: AppBar(),
         body: PageView(
           controller: _pageController,
           children: screens,

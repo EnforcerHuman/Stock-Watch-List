@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stock_watchlist/presentation/widgets/custom_app_bar.dart';
 import 'package:stock_watchlist/presentation/widgets/watch_list_screen/watch_list_view.dart';
 
 class WatchListScreen extends StatelessWidget {
@@ -6,12 +7,8 @@ class WatchListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final List<String> watchList = ['AAPL', 'GOOG', 'TSLA'];
-
-    // context.read<WatchListBloc>().add(LoadWatchListData(watchList));
-
-    return Scaffold(
-      appBar: AppBar(),
+    return const Scaffold(
+      appBar: CustomAppBar(title: 'WATCH LIST'),
       body: WatchListView(),
     );
   }

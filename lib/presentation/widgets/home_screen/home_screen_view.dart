@@ -14,7 +14,6 @@ class HomeScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<WatchListStorageBlocBloc, WatchListStorageBlocState>(
       listener: (context, state) {
-        print('state of watch list storage is $state');
         if (state is WatchListItemAdded) {
           showToast(context);
         }
